@@ -1,0 +1,7 @@
+{
+  "name": "Fake Store Market - development",
+  "stack": true,
+  "db": {
+    "uri": "mongodb://127.0.0.1:27017/market"
+  }
+}
