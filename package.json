@@ -10,7 +10,7 @@
     "typescript": "^5.1.5"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development& nodemon index.ts"
+    "start": "SET NODE_ENV=production& nodemon index.ts"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.3",
