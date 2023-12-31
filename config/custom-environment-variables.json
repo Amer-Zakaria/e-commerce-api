@@ -1,5 +1,8 @@
 {
     "port": "PORT",
-    "jwtPrivateKey": "nodeTest_JwtPrivateKey"
+    "jwtPrivateKey": "nodeTest_JwtPrivateKey",
+    "db": {
+        "uri": "nodeTest_URI"
+    }
 }
   
