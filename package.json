@@ -13,6 +13,9 @@
   "scripts": {
     "start": "SET NODE_ENV=development& nodemon index.ts"
   },
+  "engines": {
+    "node": "16.14.2"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "config": "^3.3.9",
