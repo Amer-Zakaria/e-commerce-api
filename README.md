@@ -4,10 +4,10 @@ An E-commerce API that includes various technologies, tools, and real-world case
 
 Table of Contents:
 
-- [Tech Stack](https://github.com/Amer-Zakaria/e-commerce-api#tech-stack)
-- [Try the API (API Reference)](https://github.com/Amer-Zakaria/e-commerce-api#try-the-api-(api-reference))
-- [Run Locally](https://github.com/Amer-Zakaria/e-commerce-api#run-locally)
-- [App Strcuture](https://github.com/Amer-Zakaria/e-commerce-api#app-strcuture)
+- [Tech Stack](#tech-stack)
+- [Try the API (API Reference)](#try-the-api-(api-reference))
+- [Run Locally](#run-locally)
+- [App Strcuture](#app-strcuture)
 
 ## Tech Stack
 
