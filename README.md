@@ -5,9 +5,9 @@ An E-commerce API that includes various technologies, tools, and real-world case
 Table of Contents:
 
 - [Tech Stack](#tech-stack)
-- [Try the API (API Reference)](#try-the-api-(api-reference))
+- [Try the API (API Reference)](#api-reference)
 - [Run Locally](#run-locally)
-- [App Strcuture](#app-strcuture)
+- [App Structure](#app-structure)
 
 ## Tech Stack
 
