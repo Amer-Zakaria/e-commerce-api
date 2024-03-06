@@ -6,7 +6,7 @@ import IUpdateProduct from "../Interfaces/IUpdateProduct";
 import Joi from "joi";
 import { logger } from "..";
 
-export const categories = [null, "kittchen", "tech", "car"] as const; // to tuple so you can use it as a Typescript type
+export const categories = [null, "kitchen", "tech", "car"] as const; // to tuple so you can use it as a Typescript type
 const vendorSchema = new Schema(
   {
     name: String,
