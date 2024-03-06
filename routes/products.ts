@@ -17,7 +17,7 @@ import catchDBHelperError from "../utils/catchDBHelperError";
 import validateObjectId from "../middleware/validateObjectId";
 import { Product } from "../models/product";
 import validateReq from "../middleware/validateReq";
-import validateUniqueness from "../startup/validateUniqueness";
+import validateUniqueness from "../middleware/validateUniqueness";
 
 const router = express.Router();
 

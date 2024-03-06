@@ -11,21 +11,11 @@ router.post(
   "/",
   validateReq(userCredentialsValidation, "body"),
   async (req, res) => {
-    //-----1 valid data
-    const result = userCredentialsValidation(req.body);
-    if (result.error) {
-      res.status(400).json({
-        validation: extractErrorMessagesJOI(result.error),
-        ...stackDecision(),
-      });
-      return;
-    }
-
-    const user = await User.findOne({ email: result.value.email }).select(
+    const user = await User.findOne({ email: req.body.email }).select(
       "+password"
     );
 
-    //------2 is it the right email
+    // is it an existing email
     if (!user) {
       res.status(400).json({
         message: "Incorrect Email or Password",
@@ -34,9 +24,9 @@ router.post(
       return;
     }
 
-    //------3 is it the right password
+    // is it the right password
     const isValidePassword = await bcrypt.compare(
-      result.value.password,
+      req.body.password,
       user.password
     );
     if (!isValidePassword) {

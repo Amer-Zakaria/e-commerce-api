@@ -14,5 +14,5 @@ logger.info(`App Name: ${Config.get("name")}`);
 //Publishing
 const port = Config.get("port");
 app.listen(port, () =>
-  logger.info(`\nOk, we start listing at port ${port}, any incoming requests?!`)
+  logger.info(`\nlistening at port ${port}, any incoming requests?!`)
 );

@@ -3,7 +3,7 @@ import paginationValidation from "../utils/paginationValidation";
 import User, { createUserValidation } from "../models/user";
 import { createUser, getUsers } from "../DB Helpers/users";
 import catchDBHelperError from "../utils/catchDBHelperError";
-import validateUniqueness from "../startup/validateUniqueness";
+import validateUniqueness from "../middleware/validateUniqueness";
 import validateReq from "../middleware/validateReq";
 import { authz } from "../middleware/authz";
 import { admin } from "../middleware/admin";
