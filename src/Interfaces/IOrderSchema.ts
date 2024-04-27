@@ -1,5 +1,5 @@
 import { Document, Schema } from "mongoose";
-import { orderStatusList } from "./../models/order";
+import { orderStatusList } from "../models/order";
 
 export default interface IOrderSchema extends Document {
   date?: string;

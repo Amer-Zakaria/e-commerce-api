@@ -1,5 +1,5 @@
 import express from "express";
-import User, { userCredentialsValidation } from "./../models/user";
+import User, { userCredentialsValidation } from "../models/user";
 import extractErrorMessagesJOI from "../utils/extractErrorMessagesJOI";
 import bcrypt from "bcrypt";
 import { stackDecision } from "../utils/catchDBHelperError";

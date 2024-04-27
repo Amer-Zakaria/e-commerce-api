@@ -70,10 +70,10 @@ Alternatively, you can register yourself on your own ↓↓↓
   POST /api/users
 ```
 
-| Parameter  | Type     | Description                                                                         |
-| :--------- | :------- | :---------------------------------------------------------------------------------- |
-| `name`     | `string` | **Required**.                                                                       |
-| `email`    | `string` | **Required**.                                                                       |
+| Parameter  | Type     | Description                                                                       |
+| :--------- | :------- | :-------------------------------------------------------------------------------- |
+| `name`     | `string` | **Required**.                                                                     |
+| `email`    | `string` | **Required**.                                                                     |
 | `password` | `string` | **Required**. 2 lowercase, 2 uppercase, 2 numbers, and 1 special character(ex: !) |
 
 **Return:** JWT in the header of the response, you can add it to the header of your requests, header key: `x-auth-token`
@@ -84,11 +84,11 @@ Alternatively, you can register yourself on your own ↓↓↓
   GET /api/products?pageSize=10&pageNumber=1
 ```
 
-| Parameter    | Type     | Description                                                                        |
-| :----------- | :------- | :--------------------------------------------------------------------------------- |
-| `name`       | `string` | **Optional**.                                            |
-| `price`      | `array`  | **Optional**. [min, max]. Both values are required. |
-| `tags`       | `array`  | **Optional**. |
+| Parameter    | Type     | Description                                           |
+| :----------- | :------- | :---------------------------------------------------- |
+| `name`       | `string` | **Optional**.                                         |
+| `price`      | `array`  | **Optional**. [min, max]. Both values are required.   |
+| `tags`       | `array`  | **Optional**.                                         |
 | `categories` | `array`  | **Optional**. from: [null, "kitchen", "tech", "car"]. |
 
 #### **Create an order** <img src="https://img.shields.io/badge/Logged_in-00ffff" alt="(Logged in)">
@@ -99,7 +99,7 @@ Alternatively, you can register yourself on your own ↓↓↓
 
 | Parameter  | Type     | Description                                                                                                                                                              |
 | :--------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `status`   | `string` | **Optional**. One of: ["waitingDelivery", "canceled", "delivering", "delivered"]. |
+| `status`   | `string` | **Optional**. One of: ["waitingDelivery", "canceled", "delivering", "delivered"].                                                                                        |
 | `products` | `array`  | **Required**. An array of objects representing the ordered products. Each object requires `id` (ObjectId, required) and `orderedQuantity` (number, minimum 1, required). |
 
 #### **Creat a product** <img src="https://img.shields.io/badge/Admin-ff00ff" alt="(Admin)">
@@ -108,13 +108,13 @@ Alternatively, you can register yourself on your own ↓↓↓
   POST /api/products
 ```
 
-| Parameter  | Type     | Description                                                                                              |
-| :--------- | :------- | :------------------------------------------------------------------------------------------------------- |
-| `name`     | `string` | **Required**.                                     |
-| `price`    | `number` | **Required**. Greater than or equal to 10.                           |
-| `quantity` | `number` | **Required**. Must be a non-negative number.                                       |
-| `tags`     | `array`  | **Required**.                       |
-| `category` | `string` | **Optional** One of [null, "kitchen", "tech", "car"]. |
+| Parameter  | Type     | Description                                                                                               |
+| :--------- | :------- | :-------------------------------------------------------------------------------------------------------- |
+| `name`     | `string` | **Required**.                                                                                             |
+| `price`    | `number` | **Required**. Greater than or equal to 10.                                                                |
+| `quantity` | `number` | **Required**. Must be a non-negative number.                                                              |
+| `tags`     | `array`  | **Required**.                                                                                             |
+| `category` | `string` | **Optional** One of [null, "kitchen", "tech", "car"].                                                     |
 | `vendor`   | `object` | **Optional** object containing vendor information. Requires `name` (string, required) and `bio` (string). |
 
 #### **Modify a product** <img src="https://img.shields.io/badge/Admin-ff00ff" alt="(Admin)">
@@ -123,14 +123,14 @@ Alternatively, you can register yourself on your own ↓↓↓
   PUT /api/products/$id
 ```
 
-| Parameter  | Type      | Description                                                                                              |
-| :--------- | :-------- | :------------------------------------------------------------------------------------------------------- |
-| `name`     | `string`  | **Required**.                                 |
-| `price`    | `number`  | **Required**. greater than or equal to 10.  |
-| `tags`     | `array`   | **Required**.  |
-| `quantity` | `number`  | **Required**. Must be a non-negative number.                                       |
-| `category` | `string`  | **Optional**. One of [null, "kitchen", "tech", "car"].                                |
-| `isActive` | `boolean` | **Required**. Only active products can be ordered. |
+| Parameter  | Type      | Description                                                                                         |
+| :--------- | :-------- | :-------------------------------------------------------------------------------------------------- |
+| `name`     | `string`  | **Required**.                                                                                       |
+| `price`    | `number`  | **Required**. greater than or equal to 10.                                                          |
+| `tags`     | `array`   | **Required**.                                                                                       |
+| `quantity` | `number`  | **Required**. Must be a non-negative number.                                                        |
+| `category` | `string`  | **Optional**. One of [null, "kitchen", "tech", "car"].                                              |
+| `isActive` | `boolean` | **Required**. Only active products can be ordered.                                                  |
 | `vendor`   | `object`  | **Optional**. containing vendor information. Requires `name` (string, required) and `bio` (string). |
 
 #### **Delete a product** <img src="https://img.shields.io/badge/Admin-ff00ff" alt="(Admin)">
@@ -177,6 +177,12 @@ Make sure that you've installed NodeJS and MongoDB, then...
 
 ```bash
   npm i
+```
+
+- Build
+
+```bash
+  npm run build
 ```
 
 - Set environment variables

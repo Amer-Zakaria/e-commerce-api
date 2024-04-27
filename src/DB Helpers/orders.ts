@@ -4,7 +4,7 @@ import IOrderSchema from "../Interfaces/IOrderSchema";
 import IPagination from "../Interfaces/IPagination";
 import Order from "../models/order";
 import { Product } from "../models/product";
-import ConstructDBHelperExpectedError from "./../utils/ConstructDBHelperExpectedError";
+import ConstructDBHelperExpectedError from "../utils/ConstructDBHelperExpectedError";
 
 //READ
 export async function getOrders(pagination: IPagination): Promise<{

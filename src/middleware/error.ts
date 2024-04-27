@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { isErrorWithStack } from "..";
-import { logger } from "../";
+import { logger } from "..";
 
 export default function (
   err: Error,

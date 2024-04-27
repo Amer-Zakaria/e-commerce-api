@@ -3,7 +3,7 @@ import paginationValidation from "../utils/paginationValidation";
 import { createOrder, getOrder, getOrders } from "../DB Helpers/orders";
 import Order, { createOrderValidation } from "../models/order";
 import catchDBHelperError from "../utils/catchDBHelperError";
-import { authz } from "./../middleware/authz";
+import { authz } from "../middleware/authz";
 import validateObjectId from "../middleware/validateObjectId";
 import { admin } from "../middleware/admin";
 import validateReq from "../middleware/validateReq";
