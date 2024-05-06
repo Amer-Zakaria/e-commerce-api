@@ -1,6 +1,5 @@
-/test.ts
-/test.js
+scratch/
 dist/
-node_modules
-combined.log
-error.log
+.env
+node_modules/
+*.log

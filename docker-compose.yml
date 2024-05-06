@@ -1,0 +1,13 @@
+version: "4.26"
+services:
+  api:
+    container_name: api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      context: ./
+    ports:
+      - 3001:3001
+    env_file: # .env file the sits beside this file
+      - .env 

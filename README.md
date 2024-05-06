@@ -19,8 +19,9 @@ Alongside:
 - **JOI** - data validation
 - **JWT** - JSON Web Token holds user claims encrypted, which can be transferred between backend and frontend
 - **Bycript** - password hashing
-- **Config** - manage configuration between different environments (development, production, etc)
+- **Config** - manage configuration between different environments (development, production, etc...)
 - **Winston** - Logging Management
+- **Docker** - Make the app portable
 
 ## API Reference
 
@@ -159,6 +160,34 @@ Alternatively, you can register yourself on your own ↓↓↓
 
 ## Run Locally
 
+Either by using docker or without...
+
+#### With Docker
+
+Make sure that Docker and Mongodb are installed...
+
+In docker-compose.yml file replace the NODE_ENV environment variable to development instead of production
+
+- Clone the project
+
+```bash
+  git clone https://github.com/Amer-Zakaria/e-commerce-api.git
+```
+
+- Go to the project directory
+
+```bash
+  cd e-commerce-api
+```
+
+- Build & Run the project
+
+```bash
+  docker-compose up --build
+```
+
+#### Without Docker
+
 Make sure that you've installed NodeJS and MongoDB, then...
 
 - Clone the project
@@ -183,12 +212,6 @@ Make sure that you've installed NodeJS and MongoDB, then...
 
 ```bash
   npm run build
-```
-
-- Set environment variables
-
-```bash
-  export nodeTest_JwtPrivateKey=1234
 ```
 
 - Start the server

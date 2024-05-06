@@ -1,0 +1,7 @@
+scratch/
+.env
+.git
+**/node_modules/
+**/dist
+*.log
+.env

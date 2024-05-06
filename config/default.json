@@ -1,6 +1,6 @@
 {
   "name": "Fake Store Market",
-  "port": 3000,
+  "port": 3001,
   "jwtPrivateKey": "",
   "db": {
     "uri": ""
