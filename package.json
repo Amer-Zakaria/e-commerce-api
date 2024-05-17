@@ -6,6 +6,8 @@
     "@types/jsonwebtoken": "^9.0.3",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.3.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.5"
@@ -31,7 +33,23 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.3.4",
     "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.1.6",
     "winston": "^3.11.0",
     "winston-mongodb": "^5.1.1"
-  }
+  },
+  "name": "e-commerce-api",
+  "description": "An E-commerce API that includes various technologies, tools, and real-world cases. It's made for the sake of practice.",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amer-Zakaria/e-commerce-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amer-Zakaria/e-commerce-api/issues"
+  },
+  "homepage": "https://github.com/Amer-Zakaria/e-commerce-api#readme"
 }

@@ -55,6 +55,38 @@ const passwordValidation = joiPassword
   .noWhiteSpaces()
   .required();
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    CreateUserInput:
+ *      type: object
+ *      required:
+ *        - name
+ *        - email
+ *        - password
+ *      properties:
+ *        name:
+ *          type: string
+ *          default: Jane Doe
+ *        email:
+ *          type: string
+ *          default: jane.doe@example.com
+ *        password:
+ *          type: string
+ *          default: StringPassword123!
+ *    CreateUserResponse:
+ *      type: object
+ *      properties:
+ *        _id:
+ *          type: string
+ *        name:
+ *          type: string
+ *        email:
+ *          type: string
+ *        isAdmin:
+ *          type: boolean
+ */
 export function createUserValidation(user: ICreateUser) {
   const schema = Joi.object({
     name: Joi.string().min(5).max(50).required(),

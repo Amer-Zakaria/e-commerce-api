@@ -1,6 +1,8 @@
 require("dotenv").config();
 import express from "express";
 import Config from "config";
+import swaggerDocs from "./utils/swagger";
+
 const app = express();
 
 //Startups
@@ -14,7 +16,9 @@ logger.info(`Environment: ${process.env.NODE_ENV}`);
 logger.info(`App Name: ${Config.get("name")}`);
 
 //Publishing
-const port = Config.get("port");
+const port = Config.get("port") as number;
 app.listen(port, () => {
   logger.info(`\nlistening at port ${port}, any incoming requests?!`);
+
+  swaggerDocs(app, port);
 });

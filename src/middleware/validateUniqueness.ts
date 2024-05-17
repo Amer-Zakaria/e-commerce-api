@@ -19,7 +19,7 @@ export default function validateUniqueness<T extends Document>(
     else if (document._id.toString() === req.params.id) return next();
 
     return res.status(400).json({
-      validation: { [propertyName]: `"${value}" is already exists` },
+      validation: { [propertyName]: `"${value}" already exists` },
       ...(isErrorWithStack && { stack: new Error("").stack }),
     });
   };
