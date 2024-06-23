@@ -17,18 +17,16 @@ export const router = express.Router();
  *     - User
  *     summary: Get the users
  *     parameters:
- *       - name: pageNumber
- *         in: query
- *         description: The page number
+ *       - in: query
+ *         name: pageNumber
  *         required: false
  *         schema:
- *           type: number
- *       - name: pageSize
- *         in: query
- *         description: How many users you want per page
+ *           $ref: '#/components/schemas/pageNumber'
+ *       - in: query
+ *         name: pageSize
  *         required: false
  *         schema:
- *           type: number
+ *           $ref: '#/components/schemas/pageSize'
  *     responses:
  *      200:
  *        description: Success

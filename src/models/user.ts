@@ -97,6 +97,30 @@ export function createUserValidation(user: ICreateUser) {
   return schema.validate(user, { abortEarly: false });
 }
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    UserCredentialsInput:
+ *      type: object
+ *      required:
+ *        - email
+ *        - password
+ *      properties:
+ *        email:
+ *          type: string
+ *          default: user@example.com
+ *        password:
+ *          type: string
+ *          default: SecurePass123!
+ *    UserCredentialsResponse:
+ *      type: object
+ *      properties:
+ *        email:
+ *          type: string
+ *        validCredentials:
+ *          type: boolean
+ */
 export function userCredentialsValidation(userCred: IUserCred) {
   const schema = Joi.object({
     email: Joi.string().min(5).max(255).required().email().required(),

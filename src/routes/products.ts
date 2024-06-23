@@ -21,8 +21,42 @@ import validateUniqueness from "../middleware/validateUniqueness";
 
 const router = express.Router();
 
-router.get(
-  "/",
+/**
+ * @openapi
+ * '/api/products/get-products':
+ *   post:
+ *     tags:
+ *     - Product
+ *     summary: Get the products
+ *     parameters:
+ *       - in: query
+ *         name: pageNumber
+ *         required: false
+ *         schema:
+ *           $ref: '#/components/schemas/pageNumber'
+ *       - in: query
+ *         name: pageSize
+ *         required: false
+ *         schema:
+ *           $ref: '#/components/schemas/pageSize'
+ *     requestBody:
+ *      required: false
+ *      content:
+ *        application/json:
+ *          schema:
+ *             $ref: '#/components/schemas/ProductsFilter'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/CreateProductResponse'
+ */
+router.post(
+  "/get-products",
   [
     validateReq(productsFilterValidation, "body"),
     validateReq(paginationValidation, "query"),
@@ -36,6 +70,31 @@ router.get(
   }
 );
 
+/**
+ * @openapi
+ * '/api/products':
+ *  post:
+ *     tags:
+ *     - Product
+ *     summary: Create a product
+ *     security:
+ *     - bearerAuth: []
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/CreateProductInput'
+ *     responses:
+ *      201:
+ *        description: Product created successfully
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/CreateProductResponse'
+ *      400:
+ *        description: Bad request
+ */
 router.post(
   "/",
   [
@@ -53,6 +112,40 @@ router.post(
   }
 );
 
+/**
+ * @openapi
+ *'/api/products/{id}':
+ *  put:
+ *    tags:
+ *    - Product
+ *    summary: Update a product
+ *    security:
+ *    - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The product ID
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/UpdateProductInput'
+ *    responses:
+ *      200:
+ *        description: Product updated successfully
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/CreateProductResponse'
+ *      400:
+ *        description: Bad request
+ *      404:
+ *        description: Product not found
+ */
 router.put(
   "/:id",
   [
@@ -72,6 +165,36 @@ router.put(
   }
 );
 
+/**
+ * @openapi
+ * '/api/products/{id}':
+ *  delete:
+ *    tags:
+ *    - Product
+ *    summary: Delete a product by ID
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The product ID to delete
+ *    responses:
+ *      200:
+ *        description: The product was successfully deleted
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Product'
+ *      401:
+ *        description: Unauthorized - User is not authenticated
+ *      403:
+ *        description: Forbidden - User is not authorized to delete products
+ *      404:
+ *        description: Not Found - The product with the given ID was not found
+ */
 router.delete(
   "/:id",
   [authz, admin, validateObjectId(Product)],

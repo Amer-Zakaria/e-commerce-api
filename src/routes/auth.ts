@@ -7,6 +7,29 @@ import validateReq from "../middleware/validateReq";
 
 export const router = express.Router();
 
+/**
+ * @openapi
+ * '/api/auth':
+ *  post:
+ *     tags:
+ *     - Auth
+ *     summary: User login
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/UserCredentialsInput'
+ *     responses:
+ *      200:
+ *        description: Success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: string
+ *      400:
+ *        description: Incorrect Email or Password
+ */
 router.post(
   "/",
   validateReq(userCredentialsValidation, "body"),

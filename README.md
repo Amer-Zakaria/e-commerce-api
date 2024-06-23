@@ -82,7 +82,7 @@ Alternatively, you can register yourself on your own ↓↓↓
 #### **Get the products** <img src="https://img.shields.io/badge/Guest-e6e6fa" alt="(Guset)">
 
 ```http
-  GET /api/products?pageSize=10&pageNumber=1
+  POST /api/products/get-products?pageSize=10&pageNumber=1
 ```
 
 | Parameter    | Type     | Description                                           |

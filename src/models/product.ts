@@ -7,6 +7,7 @@ import Joi from "joi";
 import { logger } from "..";
 
 export const categories = [null, "kitchen", "tech", "car"] as const; // to tuple so you can use it as a Typescript type
+
 const vendorSchema = new Schema(
   {
     name: String,
@@ -14,6 +15,7 @@ const vendorSchema = new Schema(
   },
   { _id: false }
 );
+
 const productSchema: Schema = new Schema<IProductSchema>(
   {
     vendor: vendorSchema,
@@ -87,6 +89,71 @@ productSchema.virtual("formatedPrice").get(function () {
 export const Product = model<IProductSchema>("Products", productSchema);
 export const Vendor = model("Vendor", vendorSchema);
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    CreateProductInput:
+ *      type: object
+ *      required:
+ *        - name
+ *        - price
+ *        - quantity
+ *        - tags
+ *        - category
+ *      properties:
+ *        name:
+ *          type: string
+ *          minLength: 5
+ *          maxLength: 255
+ *        price:
+ *          type: number
+ *          minimum: 10
+ *        quantity:
+ *          type: number
+ *          minimum: 0
+ *          default: 100
+ *        tags:
+ *          type: array
+ *          items:
+ *            type: string
+ *        category:
+ *          type: string
+ *          default: car
+ *        vendor:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *            bio:
+ *              type: string
+ *    CreateProductResponse:
+ *      type: object
+ *      properties:
+ *        _id:
+ *          type: string
+ *        name:
+ *          type: string
+ *        price:
+ *          type: number
+ *        quantity:
+ *          type: number
+ *        tags:
+ *          type: array
+ *          items:
+ *            type: string
+ *        category:
+ *          type: string
+ *        vendor:
+ *          type: object
+ *          required:
+ *            - name
+ *          properties:
+ *            name:
+ *              type: string
+ *            bio:
+ *              type: string
+ */
 export function createProductValidation(
   product: ICreateProduct
 ): Joi.ValidationResult {
@@ -102,6 +169,50 @@ export function createProductValidation(
   return schema.validate(product, { abortEarly: false });
 }
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    UpdateProductInput:
+ *      type: object
+ *      required:
+ *        - name
+ *        - price
+ *        - quantity
+ *        - tags
+ *        - category
+ *        - isActive
+ *      properties:
+ *        name:
+ *          type: string
+ *          minLength: 5
+ *          maxLength: 255
+ *        price:
+ *          type: number
+ *          minimum: 10
+ *        quantity:
+ *          type: number
+ *          minimum: 0
+ *          default: 100
+ *        tags:
+ *          type: array
+ *          items:
+ *            type: string
+ *        category:
+ *          type: string
+ *          default: kitchen
+ *        isActive:
+ *          type: boolean
+ *        vendor:
+ *          type: object
+ *          required:
+ *            - name
+ *          properties:
+ *            name:
+ *              type: string
+ *            bio:
+ *              type: string
+ */
 export function updateProductValidation(
   product: IUpdateProduct
 ): Joi.ValidationResult {
@@ -118,6 +229,33 @@ export function updateProductValidation(
   return schema.validate(product, { abortEarly: false });
 }
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *   ProductsFilter:
+ *     type: object
+ *     properties:
+ *       name:
+ *         type: string
+ *       price:
+ *         type: array
+ *         items:
+ *           type: number
+ *         minItems: 2
+ *         maxItems: 2
+ *         default: [0, 100]
+ *       tags:
+ *         type: array
+ *         items:
+ *           type: string
+ *         default: []
+ *       categories:
+ *         type: array
+ *         items:
+ *           type: string
+ *         default: ["kitchen", "car"]
+ */
 export function productsFilterValidation(
   productsFilter: IProductsFilterRequest
 ): Joi.ValidationResult {

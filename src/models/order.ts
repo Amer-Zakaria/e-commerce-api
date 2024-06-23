@@ -50,6 +50,35 @@ const orderSchema = new Schema<IOrderSchema>(
   { versionKey: false }
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateOrder:
+ *       type: object
+ *       required:
+ *         - status
+ *         - products
+ *       properties:
+ *         status:
+ *           type: string
+ *           enum: [waitingDelivery, canceled, delivering, delivered] # orderStatusList
+ *         products:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ProductOrder'
+ *     ProductOrder:
+ *       type: object
+ *       required:
+ *         - id
+ *         - orderedQuantity
+ *       properties:
+ *         id:
+ *           type: string
+ *         orderedQuantity:
+ *           type: number
+ *           minimum: 1
+ */
 export function createOrderValidation(createOrder: ICreateOrder) {
   const schema = Joi.object({
     status: Joi.string().valid(...orderStatusList),

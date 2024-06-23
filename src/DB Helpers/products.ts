@@ -27,7 +27,8 @@ export async function getProducts(
     filterConstructor.name = new RegExp(`.*${filter.name?.trim()}.*`, "i");
   if (filter.price)
     filterConstructor.price = { $gte: filter.price[0], $lte: filter.price[1] };
-  if (filter.tags) filterConstructor.tags = { $in: filter.tags };
+  if (filter.tags && filter.tags.length > 0)
+    filterConstructor.tags = { $in: filter.tags };
   if (filter.categories) filterConstructor.category = filter.categories;
 
   const ProductsPromise = Product.find(filterConstructor)
