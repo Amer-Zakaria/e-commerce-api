@@ -1,7 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, isValidObjectId, model } from "mongoose";
 import IOrderSchema from "../Interfaces/IOrderSchema";
-import ICreateOrder from "../Interfaces/ICreateOrder";
-import { Joi } from "..";
+import { z } from "zod";
 
 export const orderStatusList = [
   "waitingDelivery",
@@ -79,21 +78,24 @@ const orderSchema = new Schema<IOrderSchema>(
  *           type: number
  *           minimum: 1
  */
-export function createOrderValidation(createOrder: ICreateOrder) {
-  const schema = Joi.object({
-    status: Joi.string().valid(...orderStatusList),
-    products: Joi.array()
-      .items(
-        Joi.object({
-          id: Joi.objectId().required(),
-          orderedQuantity: Joi.number().min(1).required(),
+export const createOrderSchema = z
+  .object({
+    status: z.enum(orderStatusList).optional(),
+    products: z
+      .array(
+        z.object({
+          id: z.string().refine((val) => isValidObjectId(val), {
+            message: "Invalid MongoDB ObjectId",
+          }),
+          orderedQuantity: z.number().min(1),
         })
       )
-      .required(),
-  });
-  return schema.validate(createOrder, { abortEarly: false });
-}
+      .min(1),
+  })
+  .strict();
 
 const Order = model<IOrderSchema>("Orders", orderSchema);
 
 export default Order;
+
+export type ICreateOrder = z.infer<typeof createOrderSchema>;

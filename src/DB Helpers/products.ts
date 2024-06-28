@@ -1,18 +1,19 @@
 import { Error } from "mongoose";
 import IProductSchema from "../Interfaces/IProductSchema";
-import ICreateProduct from "../Interfaces/ICreateProduct";
-import IUpdateProduct from "../Interfaces/IUpdateProduct";
-import {
-  IProductsFilterRequest,
-  IProductsFilterForMongoose,
-} from "../Interfaces/IProductsFilter";
+import IProductsFilterForMongoose from "../Interfaces/IProductsFilterForMongoose";
 import IPagination from "../Interfaces/IPagination";
-import { Product, Vendor } from "../models/product";
+import {
+  ICreateProduct,
+  IUpdateProduct,
+  IFilterProduct,
+  Product,
+  Vendor,
+} from "../models/product";
 import ConstructDBHelperExpectedError from "../utils/ConstructDBHelperExpectedError";
 
 //READ
 export async function getProducts(
-  filter: IProductsFilterRequest,
+  filter: IFilterProduct,
   pagination: IPagination
 ): Promise<{
   products: IProductSchema[];

@@ -6,9 +6,9 @@ import {
   updateProductQueryFirstWay,
 } from "../DB Helpers/products";
 import {
-  productsFilterValidation,
-  createProductValidation,
-  updateProductValidation,
+  productFilterSchema,
+  createProductSchema,
+  updateProductSchema,
 } from "../models/product";
 import paginationValidation from "../utils/paginationValidation";
 import { authz } from "../middleware/authz";
@@ -58,11 +58,11 @@ const router = express.Router();
 router.post(
   "/get-products",
   [
-    validateReq(productsFilterValidation, "body"),
+    validateReq(productFilterSchema, "body"),
     validateReq(paginationValidation, "query"),
   ],
   async (req: Request, res: Response) => {
-    const products = await getProducts(req.body, req.query).catch(
+    const products = await getProducts(res.locals.data, req.query).catch(
       catchDBHelperError(res)
     );
     if (!products) return;
@@ -100,11 +100,11 @@ router.post(
   [
     authz,
     admin,
-    validateReq(createProductValidation, "body"),
+    validateReq(createProductSchema, "body"),
     validateUniqueness("name", Product),
   ],
   async (req: Request, res: Response) => {
-    const createdProduct = await createProduct(req.body).catch(
+    const createdProduct = await createProduct(res.locals.data).catch(
       catchDBHelperError(res)
     );
     if (!createdProduct) return;
@@ -152,13 +152,13 @@ router.put(
     authz,
     admin,
     validateObjectId(Product),
-    validateReq(updateProductValidation, "body"),
+    validateReq(updateProductSchema, "body"),
     validateUniqueness("name", Product),
   ],
   async (req: Request, res: Response) => {
     const updatedProduct = await updateProductQueryFirstWay(
       req.params.id,
-      req.body
+      res.locals.data
     ).catch(catchDBHelperError(res));
     if (!updatedProduct) return;
     res.json(updatedProduct);

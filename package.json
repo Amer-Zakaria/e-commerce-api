@@ -15,7 +15,7 @@
   "scripts": {
     "start": "SET NODE_ENV=development& nodemon ./src/index.ts",
     "build": "tsc",
-    "start_production": "SET NODE_ENV=development& node ./dist/index.js"
+    "start_production": "SET NODE_ENV=production& node ./dist/src/index.js"
   },
   "engines": {
     "node": "16.14.2"
@@ -27,21 +27,19 @@
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "helmet": "^7.0.0",
-    "joi": "^17.9.2",
-    "joi-oid": "^1.1.2",
-    "joi-password": "^4.1.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.3.4",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.11.0",
-    "winston-mongodb": "^5.1.1"
+    "winston-mongodb": "^5.1.1",
+    "zod": "^3.23.8"
   },
   "name": "e-commerce-api",
   "description": "An E-commerce API that includes various technologies, tools, and real-world cases. It's made for the sake of practice.",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Amer-Zakaria/e-commerce-api.git"

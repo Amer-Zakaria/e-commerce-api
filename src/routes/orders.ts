@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import paginationValidation from "../utils/paginationValidation";
 import { createOrder, getOrder, getOrders } from "../DB Helpers/orders";
-import Order, { createOrderValidation } from "../models/order";
+import Order, { createOrderSchema } from "../models/order";
 import catchDBHelperError from "../utils/catchDBHelperError";
 import { authz } from "../middleware/authz";
 import validateObjectId from "../middleware/validateObjectId";
@@ -113,11 +113,12 @@ router.get(
  */
 router.post(
   "/",
-  [authz, validateReq(createOrderValidation, "body")],
+  [authz, validateReq(createOrderSchema, "body")],
   async (req: Request, res: Response) => {
-    const createdOrder = await createOrder(req.body, res.locals.user._id).catch(
-      catchDBHelperError(res)
-    );
+    const createdOrder = await createOrder(
+      res.locals.data,
+      res.locals.user._id
+    ).catch(catchDBHelperError(res));
     if (!createdOrder) return;
     res.status(201).json(createdOrder);
   }

@@ -1,8 +1,7 @@
 import { Error, startSession } from "mongoose";
-import ICreateOrder from "../Interfaces/ICreateOrder";
 import IOrderSchema from "../Interfaces/IOrderSchema";
 import IPagination from "../Interfaces/IPagination";
-import Order from "../models/order";
+import Order, { ICreateOrder } from "../models/order";
 import { Product } from "../models/product";
 import ConstructDBHelperExpectedError from "../utils/ConstructDBHelperExpectedError";
 

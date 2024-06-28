@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import paginationValidation from "../utils/paginationValidation";
-import User, { createUserValidation } from "../models/user";
+import User, { createUserSchema } from "../models/user";
 import { createUser, getUsers } from "../DB Helpers/users";
 import catchDBHelperError from "../utils/catchDBHelperError";
 import validateUniqueness from "../middleware/validateUniqueness";
@@ -71,12 +71,9 @@ router.get(
  */
 router.post(
   "/",
-  [
-    validateReq(createUserValidation, "body"),
-    validateUniqueness("email", User),
-  ],
+  [validateReq(createUserSchema, "body"), validateUniqueness("email", User)],
   async (req: Request, res: Response) => {
-    const createdUser = await createUser(req.body).catch(
+    const createdUser = await createUser(res.locals.data).catch(
       catchDBHelperError(res)
     );
     if (!createdUser) return;

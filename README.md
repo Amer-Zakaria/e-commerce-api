@@ -16,7 +16,8 @@ Table of Contents:
 Alongside:
 
 - **Mongoose** - creates a connection between MongoDB and Node.js
-- **JOI** - data validation
+- **ZOD** - data validation
+- **Swagger** - Interactive API reference
 - **JWT** - JSON Web Token holds user claims encrypted, which can be transferred between backend and frontend
 - **Bycript** - password hashing
 - **Config** - manage configuration between different environments (development, production, etc...)

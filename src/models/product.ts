@@ -1,12 +1,9 @@
 import { Schema, model } from "mongoose";
 import IProductSchema from "../Interfaces/IProductSchema";
-import { IProductsFilterRequest } from "../Interfaces/IProductsFilter";
-import ICreateProduct from "../Interfaces/ICreateProduct";
-import IUpdateProduct from "../Interfaces/IUpdateProduct";
-import Joi from "joi";
 import { logger } from "..";
+import { z } from "zod";
 
-export const categories = [null, "kitchen", "tech", "car"] as const; // to tuple so you can use it as a Typescript type
+export const categories = ["kitchen", "tech", "car"] as const; // to tuple so you can use it as a Typescript type
 
 const vendorSchema = new Schema(
   {
@@ -38,6 +35,7 @@ const productSchema: Schema = new Schema<IProductSchema>(
         values: categories,
         message: "{VALUE} is not supported",
       },
+      default: null,
     },
     tags: {
       type: [String],
@@ -154,20 +152,18 @@ export const Vendor = model("Vendor", vendorSchema);
  *            bio:
  *              type: string
  */
-export function createProductValidation(
-  product: ICreateProduct
-): Joi.ValidationResult {
-  const schema = Joi.object({
-    name: Joi.string().min(5).max(255).required(),
-    price: Joi.number().min(10).required(),
-    quantity: Joi.number().min(0).required(),
-    tags: Joi.array().items(Joi.string().required()).required(),
-    category: Joi.string().valid(...categories),
-    vendor: Joi.object({ name: Joi.string().required(), bio: Joi.string() }),
-  });
-
-  return schema.validate(product, { abortEarly: false });
-}
+export const createProductSchema = z
+  .object({
+    name: z.string().min(5).max(255),
+    price: z.number().min(10),
+    quantity: z.number().min(0),
+    tags: z.array(z.string().min(1)).min(1),
+    category: z.enum(categories).optional().nullish(),
+    vendor: z
+      .object({ name: z.string(), bio: z.string().optional() })
+      .optional(),
+  })
+  .strict();
 
 /**
  * @openapi
@@ -213,21 +209,19 @@ export function createProductValidation(
  *            bio:
  *              type: string
  */
-export function updateProductValidation(
-  product: IUpdateProduct
-): Joi.ValidationResult {
-  const schema = Joi.object({
-    name: Joi.string().min(5).max(255).required(),
-    price: Joi.number().min(10).required(),
-    tags: Joi.array().items(Joi.string().required()).required(),
-    quantity: Joi.number().min(0).required(),
-    category: Joi.string().valid(...categories),
-    isActive: Joi.boolean().required(),
-    vendor: Joi.object({ name: Joi.string().required(), bio: Joi.string() }),
-  });
-
-  return schema.validate(product, { abortEarly: false });
-}
+export const updateProductSchema = z
+  .object({
+    name: z.string().min(5).max(255),
+    price: z.number().min(10),
+    tags: z.array(z.string().min(1)).min(1),
+    category: z.enum(categories).optional().nullish(),
+    quantity: z.number().min(0),
+    isActive: z.boolean(),
+    vendor: z
+      .object({ name: z.string(), bio: z.string().optional() })
+      .optional(),
+  })
+  .strict();
 
 /**
  * @openapi
@@ -256,17 +250,17 @@ export function updateProductValidation(
  *           type: string
  *         default: ["kitchen", "car"]
  */
-export function productsFilterValidation(
-  productsFilter: IProductsFilterRequest
-): Joi.ValidationResult {
-  const schema = Joi.object({
-    name: Joi.string(),
-    price: Joi.array()
-      .items(Joi.number().required(), Joi.number().required())
-      .length(2),
-    tags: Joi.array().items(Joi.string()),
-    categories: Joi.array().items(...categories),
-  });
+export const productFilterSchema = z
+  .object({
+    name: z.string(),
+    price: z.tuple([z.number(), z.number()]),
+    tags: z.array(z.string()),
+    categories: z.array(z.enum(categories)),
+  })
+  .strict()
+  .partial();
 
-  return schema.validate(productsFilter, { abortEarly: false });
-}
+/* Extracting typescript types from schemas  */
+export type ICreateProduct = z.infer<typeof createProductSchema>;
+export type IUpdateProduct = z.infer<typeof updateProductSchema>;
+export type IFilterProduct = z.infer<typeof productFilterSchema>;

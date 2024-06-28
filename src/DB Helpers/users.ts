@@ -1,6 +1,5 @@
-import User from "../models/user";
+import User, { ICreateUser } from "../models/user";
 import { Error } from "mongoose";
-import ICreateUser from "../Interfaces/ICreateUser";
 import IPagination from "../Interfaces/IPagination";
 import bcrypt from "bcrypt";
 import ConstructDBHelperExpectedError from "../utils/ConstructDBHelperExpectedError";

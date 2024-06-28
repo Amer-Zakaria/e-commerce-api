@@ -7,7 +7,7 @@ const app = express();
 
 //Startups
 export const logger = require("./startup/logger")();
-export const Joi = require("./startup/validation")();
+require("./startup/validation")();
 require("./startup/middlewares")(app);
 require("./startup/routes")(app);
 require("./startup/db")();

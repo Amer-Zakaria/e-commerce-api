@@ -1,12 +1,8 @@
 import mongoose, { Schema } from "mongoose";
-import ICreateUser from "../Interfaces/ICreateUser";
 import IUserSchema from "../Interfaces/IUserSchema";
-import { Joi } from "../index";
 import jwt from "jsonwebtoken";
-import { joiPasswordExtendCore } from "joi-password";
-const joiPassword = Joi.extend(joiPasswordExtendCore);
+import { z } from "zod";
 import config from "config";
-import IUserCred from "../Interfaces/IUserCred";
 
 const userSchema: Schema = new Schema<IUserSchema>(
   {
@@ -46,14 +42,22 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model<IUserSchema>("Users", userSchema);
 
-const passwordValidation = joiPassword
+const passwordValidation = z
   .string()
-  .minOfSpecialCharacters(1)
-  .minOfLowercase(2)
-  .minOfUppercase(2)
-  .minOfNumeric(2)
-  .noWhiteSpaces()
-  .required();
+  .min(8, { message: "Password must be at least 8 characters long" })
+  .regex(/[a-z]/, {
+    message: "Password must contain at least 1 lowercase letter",
+  })
+  .regex(/[A-Z]/, {
+    message: "Password must contain at least 1 uppercase letter",
+  })
+  .regex(/[0-9]/, { message: "Password must contain at least 1 number" })
+  // .regex(/[!@#$%^&*(),.?":{}|<>]/, {
+  //   message: "Password must contain at least 1 special character",
+  // })
+  .refine((val) => !/\s/.test(val), {
+    message: "Password must not contain white spaces",
+  });
 
 /**
  * @openapi
@@ -87,15 +91,13 @@ const passwordValidation = joiPassword
  *        isAdmin:
  *          type: boolean
  */
-export function createUserValidation(user: ICreateUser) {
-  const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
-    email: Joi.string().email().min(5).max(255).required(),
+export const createUserSchema = z
+  .object({
+    name: z.string().min(5).max(50),
+    email: z.string().email().min(5).max(255),
     password: passwordValidation,
-  });
-
-  return schema.validate(user, { abortEarly: false });
-}
+  })
+  .strict();
 
 /**
  * @openapi
@@ -121,13 +123,14 @@ export function createUserValidation(user: ICreateUser) {
  *        validCredentials:
  *          type: boolean
  */
-export function userCredentialsValidation(userCred: IUserCred) {
-  const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email().required(),
+export const userCredSchema = z
+  .object({
+    email: z.string().min(5).max(255).email(),
     password: passwordValidation,
-  });
-
-  return schema.validate(userCred, { abortEarly: false });
-}
+  })
+  .strict();
 
 export default User;
+
+export type ICreateUser = z.infer<typeof createUserSchema>;
+export type IUserCred = z.infer<typeof userCredSchema>;

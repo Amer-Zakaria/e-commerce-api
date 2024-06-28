@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { isErrorWithStack } from "..";
-import extractErrorMessagesJOI from "../utils/extractErrorMessagesJOI";
+import extractErrorMessagesZod from "../utils/extractErrorMessagesZod";
+import { z } from "zod";
 
 export default function validateReq(
-  validationFunction: Function,
+  schema: z.ZodObject<any>,
   part: "body" | "query"
 ) {
   return async (
@@ -11,13 +12,15 @@ export default function validateReq(
     res: Response,
     next: NextFunction
   ): Promise<any> => {
-    const result = validationFunction(req[part]);
+    const result = schema.safeParse(req[part]);
     if (result.error) {
       return res.status(400).json({
-        validation: extractErrorMessagesJOI(result.error),
+        validation: extractErrorMessagesZod(result.error),
         ...(isErrorWithStack && { stack: new Error("").stack }),
       });
     }
+
+    if (part === "body") res.locals.data = result.data;
 
     next();
   };
