@@ -26,12 +26,13 @@ Alongside:
 
 ## API Reference
 
+Note: the first request may take more time (the first request will bring the API alive again)
+
 You could follow the interactive Swagger API reference:
 https://e-commerce-api.glitch.me/docs
 
 -- or --
-
-Note: the first request may take more time (the first request will bring the API alive again)
+Follow the API reference in here:
 
 You could be in one of these three states:
 | Badget | Note |
