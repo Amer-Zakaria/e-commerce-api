@@ -2,7 +2,9 @@
   "name": "Fake Store Market",
   "port": 3001,
   "jwtPrivateKey": "",
-  "db": {
-    "uri": ""
+  "loggly": {
+    "token": "w",
+    "subdomain": "w",
+    "tags": ["E-commerce-api"]
   }
 }

@@ -1,4 +1,9 @@
 {
   "name": "Fake Store Market - production",
-  "stack": false
+  "stack": false,
+  "loggly": {
+    "token": "",
+    "subdomain": "amer1",
+    "tags": ["E-commerce-api"]
+  }
 }

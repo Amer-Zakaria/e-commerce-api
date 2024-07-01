@@ -5,10 +5,10 @@ import { Logger } from "winston";
 
 module.exports = function buildLogger() {
   let logger: Logger;
-  if (process.env.NODE_ENV === "development") {
-    logger = devLogger();
-  } else {
+  if (process.env.NODE_ENV === "production") {
     logger = proLogger();
+  } else {
+    logger = devLogger();
   }
 
   return logger;

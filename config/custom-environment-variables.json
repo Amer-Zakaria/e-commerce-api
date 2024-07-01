@@ -1,8 +1,10 @@
 {
-    "port": "PORT",
-    "jwtPrivateKey": "nodeTest_JwtPrivateKey",
-    "db": {
-        "uri": "nodeTest_URI"
-    }
+  "port": "PORT",
+  "jwtPrivateKey": "nodeTest_JwtPrivateKey",
+  "db": {
+    "uri": "nodeTest_URI"
+  },
+  "loggly": {
+    "token": "nodeTest_LOGGLY_TOKEN"
+  }
 }
-  

@@ -16,7 +16,7 @@ Table of Contents:
 Alongside:
 
 - **Mongoose** - creates a connection between MongoDB and Node.js
-- **ZOD** - data validation
+- **Zod** - data validation
 - **Swagger** - Interactive API reference
 - **JWT** - JSON Web Token holds user claims encrypted, which can be transferred between backend and frontend
 - **Bycript** - password hashing
@@ -25,6 +25,11 @@ Alongside:
 - **Docker** - Make the app portable
 
 ## API Reference
+
+You could follow the interactive Swagger API reference:
+https://e-commerce-api.glitch.me/docs
+
+-- or --
 
 Note: the first request may take more time (the first request will bring the API alive again)
 
