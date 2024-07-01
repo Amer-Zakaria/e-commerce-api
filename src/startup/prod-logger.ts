@@ -1,6 +1,5 @@
 import { format, createLogger, transports } from "winston";
-const { timestamp, combine, errors, json, printf } = format;
-import "winston-mongodb";
+const { timestamp, combine, errors, json } = format;
 
 const logger = createLogger({
   format: combine(timestamp(), errors({ stack: true }), json()),
