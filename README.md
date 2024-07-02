@@ -29,7 +29,7 @@ Alongside:
 Note: the first request may take more time (the first request will bring the API alive again)
 
 You could follow the interactive Swagger API reference:
-https://e-commerce-api.glitch.me/docs
+https://e-commerce-api-q0lr.onrender.com/docs
 
 -- or --
 Follow the API reference in here:
@@ -41,7 +41,7 @@ You could be in one of these three states:
 | ![MIT License](https://img.shields.io/badge/Admin-ff00ff) | The admin role can only be set in the database directly, but I've provided an account in the Login section |
 | ![MIT License](https://img.shields.io/badge/Guest-e6e6fa) | |
 
-Base URL: https://e-commerce-api.glitch.me
+Base URL: https://e-commerce-api-q0lr.onrender.com
 
 ### List of routes and their required role:
 

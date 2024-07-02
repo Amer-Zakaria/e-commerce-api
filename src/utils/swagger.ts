@@ -15,8 +15,8 @@ const options: swaggerJsdoc.Options = {
     To be logged in:
     1- Obtain the token: 
       Pick one rule and send its content throught the Auth route:
-      Customer: { "email": "logged_in@gmail.com", "password": "AAaa11!" }
-      Admin: { "email": "admin@gmail.com", "password": "AdmiN11!" }
+      Customer: { "email": "logged_in@example.com", "password": "StringPassword123!" }
+      Admin: { "email": "admin@example.com", "password": "StringPassword123!" }
       or you could register throught (POST /api/user) as customer
     2- Inject the token in the requests' headers
       copy the token that you've obtain from the response
