@@ -2,6 +2,7 @@ require("dotenv").config();
 import express from "express";
 import Config from "config";
 import swaggerDocs from "./utils/swagger";
+import { RedisClientType } from "redis";
 
 const app = express();
 
@@ -10,7 +11,8 @@ export const logger = require("./startup/logger")();
 require("./startup/validation")();
 require("./startup/middlewares")(app);
 require("./startup/routes")(app);
-require("./startup/db")();
+export const cacheClient = require("./startup/cache")() as RedisClientType;
+require("./startup/db")(cacheClient);
 export const isErrorWithStack: boolean = Config.get("stack");
 logger.info(`Environment: ${process.env.NODE_ENV}`);
 logger.info(`App Name: ${Config.get("name")}`);

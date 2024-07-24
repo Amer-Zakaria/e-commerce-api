@@ -6,5 +6,12 @@
   },
   "loggly": {
     "token": "nodeTest_LOGGLY_TOKEN"
+  },
+  "redis": {
+    "password": "nodeTest_REDIS_PASS",
+    "socket": {
+      "host": "nodeTest_REDIS_HOST",
+      "port": "nodeTest_REDIS_PORT"
+    }
   }
 }

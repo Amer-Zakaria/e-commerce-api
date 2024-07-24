@@ -6,5 +6,12 @@
     "token": "w",
     "subdomain": "w",
     "tags": ["E-commerce-api"]
+  },
+  "redis": {
+    "password": "",
+    "socket": {
+      "host": "",
+      "port": 0
+    }
   }
 }
