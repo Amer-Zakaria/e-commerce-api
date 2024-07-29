@@ -3,7 +3,7 @@ import Config from "config";
 import { logger } from "..";
 import { setRedisIsHealthy } from "../utils/trackRedisHealth";
 
-module.exports = async function cache() {
+module.exports = function cache() {
   const client = createClient({
     password: Config.get("redis.password"),
     socket: {
@@ -18,11 +18,7 @@ module.exports = async function cache() {
     setRedisIsHealthy(false);
   });
 
-  if (!client.isOpen) {
-    client.connect().catch((_) => {});
-  }
-
-  client.on("connect", () => {
+  client.on("ready", () => {
     setRedisIsHealthy(true);
     logger.info("Connected to Redis");
   });

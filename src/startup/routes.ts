@@ -4,9 +4,12 @@ import orders from "../routes/orders";
 import users from "../routes/users";
 import auth from "../routes/auth";
 import error from "../middleware/error";
+import { getRedisIsHealthy } from "../utils/trackRedisHealth";
 
 module.exports = function (app: Express) {
-  app.get("/", (req, res) => res.json("Hello from the home page!!"));
+  app.get("/", (req, res) =>
+    res.json(`Hello from the home page!! \ncache? ${getRedisIsHealthy()}`)
+  );
   app.use("/api/products", products);
   app.use("/api/orders", orders);
   app.use("/api/users", users);

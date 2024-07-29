@@ -2,7 +2,7 @@ import { Product } from "../models/product";
 import { cacheClient } from "..";
 import { SchemaFieldTypes } from "redis";
 
-const INDEX = "product:id";
+export const INDEX = "product:id";
 
 export default async function syncCache() {
   //checking for the products
