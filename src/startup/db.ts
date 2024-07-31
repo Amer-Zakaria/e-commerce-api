@@ -8,19 +8,15 @@ import { setRedisIsHealthy } from "../utils/trackRedisHealth";
 module.exports = function db(cacheClient: RedisClientType) {
   const MONGO_ERROR_LABEL = "MongoDBError";
 
-  const MongoDBPromise = new Promise((resolve) => {
-    connect(Config.get("db.uri"), {
-      family: 4,
-      serverSelectionTimeoutMS: 15 * 1000,
-    })
-      .then(() => {
-        logger.info(`\nConected to MongoDB "${Config.get("db.uri")}"`);
-        resolve(true);
-      })
-      .catch(() => {
-        throw new Error(MONGO_ERROR_LABEL);
-      });
-  });
+  const MongoDBPromise = connect(Config.get("db.uri"), {
+    family: 4,
+    serverSelectionTimeoutMS: 15 * 1000,
+  })
+    .then(() => logger.info(`\nConected to MongoDB "${Config.get("db.uri")}"`))
+    .catch((err) => {
+      err.message = MONGO_ERROR_LABEL;
+      throw err;
+    });
 
   //connect to MonogDB & enusre the cache is connected to sync data between them
   Promise.all([MongoDBPromise, cacheClient.connect()])
@@ -36,9 +32,7 @@ module.exports = function db(cacheClient: RedisClientType) {
     })
     .catch((err) => {
       logger.info("One of the databases failed to connct");
-      if (err.message === MONGO_ERROR_LABEL)
-        // MongoDB error
-        throw new Error("MongoDB failed to connect");
+      if (err.message === MONGO_ERROR_LABEL) throw err;
       else setRedisIsHealthy(false); // Redis error
     });
 };

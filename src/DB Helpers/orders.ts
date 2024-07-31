@@ -4,6 +4,8 @@ import IPagination from "../Interfaces/IPagination";
 import Order, { ICreateOrder } from "../models/order";
 import { Product } from "../models/product";
 import ConstructDBHelperExpectedError from "../utils/ConstructDBHelperExpectedError";
+import { cacheClient } from "..";
+import { setRedisIsHealthy } from "../utils/trackRedisHealth";
 
 //READ
 export async function getOrders(pagination: IPagination): Promise<{
@@ -69,7 +71,7 @@ export async function createOrder(
   if (productsError) return Promise.reject(productsError);
 
   //creating the order & updateing the products stock as a transaction
-  //===Transaction Start
+  //===Transaction Starts
   const session = await startSession();
   session.startTransaction();
 
@@ -95,17 +97,26 @@ export async function createOrder(
     throw errs;
   });
 
+  //redis transcation
+  const multi = cacheClient.multi();
+
   //updateing the products stock
   for (const product of createdOrder.products) {
     //
     const p = await Product.findById(product.id).session(session);
     if (p) p.quantity = p.quantity - product.orderedQuantity;
     await p?.save();
+
+    //and for the cach
+    multi.json.set("product:" + p?._id, "$", p as any);
   }
+
+  //redis transcation execute
+  await multi.exec().catch(() => setRedisIsHealthy(false));
 
   await session.commitTransaction();
   await session.endSession();
-  //===Transaction End
+  //===Transaction Ends
 
   return order[0];
 }

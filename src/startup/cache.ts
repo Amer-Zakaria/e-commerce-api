@@ -19,7 +19,6 @@ module.exports = function cache() {
   });
 
   client.on("ready", () => {
-    setRedisIsHealthy(true);
     logger.info("Connected to Redis");
   });
 

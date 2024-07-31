@@ -8,7 +8,8 @@ import { getRedisIsHealthy } from "../utils/trackRedisHealth";
 
 module.exports = function (app: Express) {
   app.get("/", (req, res) =>
-    res.json(`Hello from the home page!! \ncache? ${getRedisIsHealthy()}`)
+    res.json(`Hello from the home page!!
+      cache? ${getRedisIsHealthy()}`)
   );
   app.use("/api/products", products);
   app.use("/api/orders", orders);

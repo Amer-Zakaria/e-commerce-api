@@ -8,6 +8,7 @@ export const orderStatusList = [
   "delivering",
   "delivered",
 ] as const;
+
 const orderSchema = new Schema<IOrderSchema>(
   {
     date: { type: Date, default: Date.now },
