@@ -11,11 +11,12 @@ Table of Contents:
 
 ## Tech Stack
 
-**Typescript | Express | MongoDB**
+**Typescript | Express | MongoDB | Redis**
 
 Alongside:
 
 - **Mongoose** - creates a connection between MongoDB and Node.js
+- **redis** - Cache frequently used data
 - **Zod** - data validation
 - **Swagger** - Interactive API reference
 - **JWT** - JSON Web Token holds user claims encrypted, which can be transferred between backend and frontend
