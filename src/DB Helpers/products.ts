@@ -142,6 +142,43 @@ export async function updateProductQueryFirstWay(
   return savedProduct;
 }
 
+//PATCH isActive
+export async function updateIsActive(id: string, isActive: Boolean) {
+  //GET IT
+  const product = await Product.findOne({ _id: id });
+
+  //VALIDATE IT
+  if (!product) {
+    return ConstructDBHelperExpectedError(404, "Product doesn't exist");
+  }
+
+  product.isActive = isActive;
+
+  //SAVE IT
+  //---------- Transaction starts
+  const session = await startSession();
+  session.startTransaction();
+
+  const savedProduct = await product
+    .save()
+    .catch((errs: Error.ValidationError) => {
+      if (errs.errors) return ConstructDBHelperExpectedError(400, errs);
+      throw new Error(errs.message);
+    });
+
+  if (getRedisIsHealthy()) {
+    await cacheClient.json
+      .set("product:" + savedProduct._id, "$", savedProduct as any)
+      .catch(() => setRedisIsHealthy(false));
+  }
+
+  await session.commitTransaction();
+  await session.endSession();
+  //---------- Transaction ends
+
+  return savedProduct;
+}
+
 //DELETE
 export async function deleteProduct(product: IProductSchema) {
   //---------- Transaction starts

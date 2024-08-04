@@ -3,6 +3,7 @@ import {
   createProduct,
   deleteProduct,
   getProducts,
+  updateIsActive,
   updateProductQueryFirstWay,
 } from "../DB Helpers/products";
 import {
@@ -45,6 +46,7 @@ const router = express.Router();
  *        application/json:
  *          schema:
  *             $ref: '#/components/schemas/ProductsFilter'
+ *      description: Products Filter
  *     responses:
  *       200:
  *         description: Success
@@ -161,6 +163,53 @@ router.put(
       res.locals.data
     ).catch(catchDBHelperError(res));
     if (!updatedProduct) return;
+    res.json(updatedProduct);
+  }
+);
+
+/**
+ * @openapi
+ * '/api/products/{isActive}/{id}':
+ *   patch:
+ *     tags:
+ *     - Product
+ *     summary: Flip "isActive"
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: isActive
+ *         required: true
+ *         schema:
+ *           type: boolean
+ *         description: Is active (true/false)
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The product Id
+ *     responses:
+ *       200:
+ *         description: Product updated successfully
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Product not found
+ */
+router.patch(
+  "/:isActive/:id",
+  [authz, admin, validateObjectId(Product)],
+  async (req: Request, res: Response) => {
+    const isActive = req.params.isActive === "true"; //convet to boolean
+    const id = req.params.id;
+
+    const updatedProduct = await updateIsActive(id, isActive).catch(
+      catchDBHelperError(res)
+    );
+
+    if (!updatedProduct) return;
+
     res.json(updatedProduct);
   }
 );

@@ -216,7 +216,6 @@ export const updateProductSchema = z
     tags: z.array(z.string().min(1)).min(1),
     category: z.enum(categories).optional().nullish(),
     quantity: z.number().min(0),
-    isActive: z.boolean(),
     vendor: z
       .object({ name: z.string(), bio: z.string().optional() })
       .optional(),

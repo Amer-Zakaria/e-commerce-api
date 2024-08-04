@@ -14,8 +14,11 @@ export function getCachedProducts(
 
   const byName = name && `@name:\*${name.trim()}\*`,
     byPrice = price && `@price:[${price[0]} ${price[1]}]`,
-    byCategories = categories && `@category:(${categories.join(" | ")})`,
-    byTags = tags && `@tags:(${tags.join(" | ")})`;
+    byCategories =
+      categories &&
+      categories?.length >= 1 &&
+      `@category:(${categories.join(" | ")})`,
+    byTags = tags && tags?.length >= 1 && `@tags:(${tags.join(" | ")})`;
   const filters = [byName, byPrice, byCategories, byTags]
     .filter((filter) => filter)
     .join(" ");
@@ -37,5 +40,6 @@ export function getCachedProducts(
         pageSize,
         pageNumber,
       },
+      source: "cache",
     }));
 }
