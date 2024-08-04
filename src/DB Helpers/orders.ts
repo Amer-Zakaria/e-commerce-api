@@ -120,3 +120,23 @@ export async function createOrder(
 
   return order[0];
 }
+
+//PATCH isActive
+export async function updateStatus(id: string, status: IOrderSchema["status"]) {
+  //GET IT
+  const order = await Order.findOne({ _id: id });
+
+  //VALIDATE IT
+  if (!order) {
+    return ConstructDBHelperExpectedError(404, "Order doesn't exist");
+  }
+
+  order.status = status;
+
+  const savedOrder = await order.save().catch((errs: Error.ValidationError) => {
+    if (errs.errors) return ConstructDBHelperExpectedError(400, errs);
+    throw new Error(errs.message);
+  });
+
+  return savedOrder;
+}

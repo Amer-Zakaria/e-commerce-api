@@ -1,12 +1,19 @@
 import express, { Request, Response } from "express";
 import paginationValidation from "../utils/paginationValidation";
-import { createOrder, getOrder, getOrders } from "../DB Helpers/orders";
-import Order, { createOrderSchema } from "../models/order";
+import {
+  createOrder,
+  getOrder,
+  getOrders,
+  updateStatus,
+} from "../DB Helpers/orders";
+import Order, { createOrderSchema, orderStatusList } from "../models/order";
 import catchDBHelperError from "../utils/catchDBHelperError";
 import { authz } from "../middleware/authz";
 import validateObjectId from "../middleware/validateObjectId";
 import { admin } from "../middleware/admin";
 import validateReq from "../middleware/validateReq";
+import { z } from "zod";
+import extractErrorMessagesZod from "../utils/extractErrorMessagesZod";
 
 const router = express.Router();
 
@@ -121,6 +128,62 @@ router.post(
     ).catch(catchDBHelperError(res));
     if (!createdOrder) return;
     res.status(201).json(createdOrder);
+  }
+);
+
+/**
+ * @openapi
+ * '/api/orders/{status}/{id}':
+ *   patch:
+ *     tags:
+ *     - Order
+ *     summary: Change the "status"
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: status
+ *         required: true
+ *         schema:
+ *           type:
+ *           enum: [waitingDelivery, canceled, delivering, delivered]
+ *         description: Order status
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The order Id
+ *     responses:
+ *       200:
+ *         description: Order updated successfully
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Order not found
+ */
+router.patch(
+  "/:status/:id",
+  [authz, admin, validateObjectId(Order)],
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const status = req.params.status;
+    //Validate
+    const statusSchema = z.enum(orderStatusList);
+    const result = statusSchema.safeParse(status);
+    if (result.error)
+      return res.status(400).json({
+        validation: extractErrorMessagesZod(result.error),
+      });
+
+    //Update
+    const updatedOrder = await updateStatus(id, result.data).catch(
+      catchDBHelperError(res)
+    );
+
+    if (!updatedOrder) return;
+
+    res.json(updatedOrder);
   }
 );
 
