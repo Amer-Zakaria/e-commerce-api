@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { ZodError } from "zod";
 
-function extractErrorMessagesZod(err: z.ZodError) {
+function extractErrorMessagesZod(err: ZodError) {
   let returningError: {
     path: (string | number)[];
     message: string;

@@ -107,7 +107,7 @@ export async function createOrder(
     if (p) p.quantity = p.quantity - product.orderedQuantity;
     await p?.save();
 
-    //and for the cach
+    //and for the cache
     multi.json.set("product:" + p?._id, "$", p as any);
   }
 

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import { Error } from "mongoose";
 
-function extractErrorMessagesMongoose(errs: mongoose.Error.ValidationError) {
+function extractErrorMessagesMongoose(errs: Error.ValidationError) {
   return Object.keys(errs.errors).reduce(
     (objectAccumlator, propertyName) => ({
       ...objectAccumlator,

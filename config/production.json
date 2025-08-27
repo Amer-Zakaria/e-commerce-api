@@ -4,6 +4,8 @@
   "loggly": {
     "token": "",
     "subdomain": "amer1",
-    "tags": ["E-commerce-api"]
+    "tags": ["E-commerce-api"],
+    "json": true,
+    "level": "error"
   }
 }
